@@ -1,14 +1,15 @@
-# Getting the python 3.9 image
-# Optimization: can consider using a smaller more restricted image
-FROM python:3.9
+# Use an official Python runtime as a parent image
+FROM python:3
 
-# Copying my app to the image
-ENV APP_HOME /app
-WORKDIR $APP_HOME
-COPY . ./
+# Set the working directory in the container
+WORKDIR /app
 
-# Install production dependencies form the requirements.txt file
+# Copy the current directory contents into the container
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
-# Startup command to serve our app
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 main:app
+# Define the command to run your Python script
+CMD ["python", "rfm_analysis.py"]
+
